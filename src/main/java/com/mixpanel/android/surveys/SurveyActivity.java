@@ -294,10 +294,12 @@ public class SurveyActivity extends Activity {
         final UpdateDisplayState.DisplayState.SurveyState surveyState = getSurveyState();
         final int surveySize = surveyState.getSurvey().getQuestions().size();
         String questions = getString(R.string.question);
-        if ((surveySize > 10 && surveySize < 2) || surveySize % 10 != 1) {
+        if (surveySize > 10 && surveySize < 2) {
             questions = getString(R.string.question_ov);
         } else if (surveySize % 10 >= 2 && surveySize % 10 <= 4) {
             questions = getString(R.string.question_a);
+        } else if (surveySize % 10 != 1) {
+            questions = getString(R.string.question_ov);
         }
 
         return String.format(getString(R.string.com_mixpanel_android_survey_prompt_dialog_message), surveySize, questions);
