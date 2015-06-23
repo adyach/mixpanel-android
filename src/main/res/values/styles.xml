@@ -4,7 +4,7 @@
     <item name="android:windowEnterAnimation">@anim/com_mixpanel_android_fade_in</item>
     <item name="android:windowExitAnimation">@anim/com_mixpanel_android_fade_out</item>
   </style>
-  <style name="com_mixpanel_android_SurveyActivityTheme" parent="android:Theme">
+  <style name="com_mixpanel_android_SurveyActivityTheme" parent="Theme.AppCompat.Light">
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowContentOverlay">@null</item>
