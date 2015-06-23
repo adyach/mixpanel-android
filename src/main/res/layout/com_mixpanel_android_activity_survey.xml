@@ -57,16 +57,6 @@
         android:layout_height="40dp"
         android:paddingTop="10dp" >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:scaleType="fitStart"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/com_mixpanel_android_logo"
-            android:contentDescription="@string/com_mixpanel_android_logo"
-            />
-
         <com.mixpanel.android.surveys.FadeOnPressButton
             android:id="@+id/com_mixpanel_android_button_exit"
             android:layout_width="wrap_content"

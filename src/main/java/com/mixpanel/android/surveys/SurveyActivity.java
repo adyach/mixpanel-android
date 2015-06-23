@@ -52,7 +52,7 @@ import java.util.TimeZone;
 
 /**
  * Activity used internally by Mixpanel to display surveys and inapp takeover notifications.
- *
+ * <p/>
  * You should not send Intent's directly to display this activity. Instead use
  * {@link com.mixpanel.android.mpmetrics.MixpanelAPI.People#showSurveyIfAvailable(Activity)} and
  * {@link com.mixpanel.android.mpmetrics.MixpanelAPI.People#showNotificationIfAvailable(Activity)}
@@ -108,8 +108,8 @@ public class SurveyActivity extends Activity {
         }
 
         final GradientDrawable gd = new GradientDrawable(
-            GradientDrawable.Orientation.LEFT_RIGHT, // Ignored in radial gradients
-            new int[]{ 0xE560607C, 0xE548485D, 0xE518181F, 0xE518181F }
+                GradientDrawable.Orientation.LEFT_RIGHT, // Ignored in radial gradients
+                new int[]{0xE560607C, 0xE548485D, 0xE518181F, 0xE518181F}
         );
         gd.setGradientType(GradientDrawable.RADIAL_GRADIENT);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -174,7 +174,7 @@ public class SurveyActivity extends Activity {
         });
         ctaButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
-			public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.setBackgroundResource(R.drawable.com_mixpanel_android_cta_button_highlight);
                 } else {
@@ -193,15 +193,15 @@ public class SurveyActivity extends Activity {
 
         // Animations
         final ScaleAnimation scale = new ScaleAnimation(
-            .95f, 1.0f, .95f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
+                .95f, 1.0f, .95f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
         scale.setDuration(200);
         inAppImageView.startAnimation(scale);
 
         final TranslateAnimation translate = new TranslateAnimation(
-             Animation.RELATIVE_TO_SELF, 0.0f,
-             Animation.RELATIVE_TO_SELF, 0.0f,
-             Animation.RELATIVE_TO_SELF, 0.5f,
-             Animation.RELATIVE_TO_SELF, 0.0f
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.0f
         );
         translate.setInterpolator(new DecelerateInterpolator());
         translate.setDuration(200);
@@ -270,7 +270,7 @@ public class SurveyActivity extends Activity {
 
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle(R.string.com_mixpanel_android_survey_prompt_dialog_title);
-        alertBuilder.setMessage(R.string.com_mixpanel_android_survey_prompt_dialog_message);
+        alertBuilder.setMessage(getMessage());
         alertBuilder.setPositiveButton(R.string.com_mixpanel_android_sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -288,6 +288,19 @@ public class SurveyActivity extends Activity {
         alertBuilder.setCancelable(false);
         mDialog = alertBuilder.create();
         mDialog.show();
+    }
+
+    private String getMessage() {
+        final UpdateDisplayState.DisplayState.SurveyState surveyState = getSurveyState();
+        final int surveySize = surveyState.getSurvey().getQuestions().size();
+        String questions = getString(R.string.question);
+        if ((surveySize > 10 && surveySize < 2) || surveySize % 10 != 1) {
+            questions = getString(R.string.question_ov);
+        } else if (surveySize % 10 >= 2 && surveySize % 10 <= 4) {
+            questions = getString(R.string.question_a);
+        }
+
+        return String.format(getString(R.string.com_mixpanel_android_survey_prompt_dialog_message), surveySize, questions);
     }
 
     @Override
@@ -398,7 +411,7 @@ public class SurveyActivity extends Activity {
             return false;
         }
         return UpdateDisplayState.DisplayState.SurveyState.TYPE.equals(
-            mUpdateDisplayState.getDisplayState().getType()
+                mUpdateDisplayState.getDisplayState().getType()
         );
     }
 
@@ -407,7 +420,7 @@ public class SurveyActivity extends Activity {
             return false;
         }
         return UpdateDisplayState.DisplayState.InAppNotificationState.TYPE.equals(
-            mUpdateDisplayState.getDisplayState().getType()
+                mUpdateDisplayState.getDisplayState().getType()
         );
     }
 
@@ -463,13 +476,15 @@ public class SurveyActivity extends Activity {
             } else {
                 mCardHolder.replaceTo(question, answerValue);
             }
-        } catch(final CardCarouselLayout.UnrecognizedAnswerTypeException e) {
+        } catch (final CardCarouselLayout.UnrecognizedAnswerTypeException e) {
             goToNextQuestion();
             return;
         }
 
         if (questions.size() > 1) {
-            mProgressTextView.setText("" + (idx + 1) + " of " + questions.size());
+            StringBuilder sb = new StringBuilder();
+            sb.append(idx + 1).append(" ").append(getString(R.string.of)).append(" ").append(questions.size());
+            mProgressTextView.setText(sb.toString());
         } else {
             mProgressTextView.setText("");
         }

@@ -11,8 +11,7 @@
         android:id="@+id/com_mixpanel_android_notification_gradient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingRight="50dp"
-        android:contentDescription="@string/com_mixpanel_android_notification_image" />
+        android:paddingRight="50dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,23 +19,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:baselineAligned="false">
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:gravity="center"
-            android:orientation="horizontal">
-    
-            <com.mixpanel.android.surveys.FadingImageView
-                android:id="@+id/com_mixpanel_android_notification_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/com_mixpanel_android_notification_image"
-                android:scaleType="fitCenter"
-                android:layout_centerInParent="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/com_mixpanel_android_logo" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
